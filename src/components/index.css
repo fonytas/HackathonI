@@ -1,0 +1,17 @@
+body {
+    font-family: 'Roboto', sans-serif;
+    font-size: 1rem;
+}
+
+h1 {
+    color: #7f0000;
+}
+
+p{
+    font-size: 0.75rem;
+}
+
+.Logout{
+
+    font-size: 10rem;
+}
