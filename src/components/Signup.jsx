@@ -10,14 +10,20 @@ import Paper from 'material-ui/Paper';
 import TextField from 'material-ui/TextField';
 
 const styles = theme => ({
-  root: {
-    flexGrow: 1,
-  },
-  paper: {
-    padding: theme.spacing.unit * 2,
-    textAlign: 'center',
-    color: theme.palette.text.secondary,
-  },
+    root: {
+        flexGrow: 1,
+      },
+    paper: {
+        padding: theme.spacing.unit * 2,
+        textAlign: 'center',
+        color: theme.palette.text.secondary,
+      },
+    signInButton:{
+        margin: theme.spacing.unit + 4,
+        color: '#9ba09e',
+        textColor:'#5f0000'
+
+    }
 });
 
 class Signup extends Component {
@@ -35,8 +41,6 @@ class Signup extends Component {
     onSubmit(event) {
         event.preventDefault();
         const { email, password } = this.state;
-
-
 
         auth.createUserWithEmailAndPassword(email, password)
         .then(authUser => {
@@ -60,11 +64,8 @@ class Signup extends Component {
     sendVerification(){
 
         var user = firebase.auth().currentUser;
-        // var emailVerified;
 
         user.sendEmailVerification().then(function() {
-            // Email sent.
-            // console.log(user.emailVerified);
 
         }).catch(function(error) {
             // An error happened.
@@ -103,7 +104,8 @@ class Signup extends Component {
                                 />
                                 <br />
                                 <Button variant="raised" color="secondary" type="submit">Sign up</Button>
-                                <p>Already have an account ? <Link to="/login">Login</Link></p>
+                                <Button onClick={()=> this.props.history.push('/login')} className={classes.signInButton} variant="raised" type="submit">Log in</Button>
+                                {/*<p>Already have an account ? <Link to="/login">Login</Link></p>*/}
                             </form>
                         </Paper>
                     </Grid>

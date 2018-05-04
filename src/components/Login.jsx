@@ -8,17 +8,30 @@ import Grid from 'material-ui/Grid';
 import Paper from 'material-ui/Paper';
 import TextField from 'material-ui/TextField';
 import Snackbar from 'material-ui/Snackbar';
+import {Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle} from "material-ui";
+import firebase from "../firebase";
 
 const styles = theme => ({
-  root: {
-    flexGrow: 1,
-  },
-  paper: {
-    padding: theme.spacing.unit * 2,
-    textAlign: 'center',
-    color: theme.palette.text.secondary,
-  },
+
+    root: {
+        flexGrow: 1,
+      },
+    paper: {
+        padding: theme.spacing.unit * 2,
+        textAlign: 'center',
+        color: theme.palette.text.secondary,
+      },
+    signUpButton:{
+        margin: theme.spacing.unit + 8,
+        color: '#9ba09e',
+        textColor:'#5f0000',
+    },
+    button: {
+        margin: theme.spacing.unit,
+        fontSize: 12
+    },
 });
+
 
 class Login extends Component {
 
@@ -28,20 +41,38 @@ class Login extends Component {
             email : "",
             password : "",
             isVerified : false,
-            vertical: null,
-            horizontal: null,
+            vertical: "top",
+            horizontal: "center",
+            openDialog: false,
+            open: false
         }
         this.onSubmit = this.onSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
     }
 
 
-    state = {
-        open: false,
-        vertical: 'top',
-        horizontal: 'center',
+    handleClickOpenDialog = () => {
+        this.setState({ openDialog: true });
+        // console.log(this.openDialog)
     };
 
+    handleCloseDialog = () => {
+        this.setState({ openDialog: false });
+    };
+
+    resetPassword = () =>{
+        this.setState({ openDialog: false });
+
+        var user = firebase.auth();
+        var emailAddress = "fonyfonyta@gmail.com";
+
+        user.sendPasswordResetEmail(emailAddress).then(function() {
+            // Email sent.
+            console.log("Email Sent!")
+        }).catch(function(error) {
+            // An error happened.
+        });
+    }
 
 
     handleClose = () => {
@@ -75,8 +106,9 @@ class Login extends Component {
         });
     };
 
+
     render() {
-        const { email, password,vertical, horizontal,open } = this.state;
+        const { email, password,vertical, horizontal, openDialog, open} = this.state;
         const classes = this.props.classes;
 
         return (
@@ -109,6 +141,8 @@ class Login extends Component {
 
                             <br />
                             <Button variant="raised" color="secondary" type="submit">Log in</Button>
+                            <Button onClick={()=> this.props.history.push('/signup')} className={classes.signUpButton} variant="raised" type="submit">Sign Up</Button>
+
 
                             <Snackbar
                                 anchorOrigin={{ vertical, horizontal }}
@@ -122,8 +156,44 @@ class Login extends Component {
                             />
 
 
+
+
+
                         </form>
-                        <p>Don't have an account? <Link to="/signup">Sign up here</Link></p>
+
+                        <Button className={classes.button} onClick={this.handleClickOpenDialog}>Forget your password ?</Button>
+                        <Dialog
+                            open={openDialog}
+                            onClose={this.handleCloseDialog}
+                            aria-labelledby="form-dialog-title"
+                        >
+                            <DialogTitle id="form-dialog-title">Subscribe</DialogTitle>
+                            <DialogContent>
+                                <DialogContentText>
+                                    To subscribe to this website, please enter your email address here. We will send
+                                    updates occationally.
+                                </DialogContentText>
+                                <TextField
+                                    autoFocus
+                                    margin="dense"
+                                    id="name"
+                                    label="Email Address"
+                                    type="email"
+                                    fullWidth
+                                />
+                            </DialogContent>
+                            <DialogActions>
+                                <Button onClick={this.handleCloseDialog} color="secondary">
+                                    Cancel
+                                </Button>
+                                <Button onClick={this.resetPassword} color="primary">
+                                    Send
+                                </Button>
+                            </DialogActions>
+                        </Dialog>
+
+
+
                     </Paper>
 
 
