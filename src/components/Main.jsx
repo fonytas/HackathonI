@@ -96,6 +96,7 @@ class Main extends Component {
     addNote(e) {
         e.preventDefault();
         const uid = auth.currentUser.uid;
+        // console.log(auth.currentUser.displayName)
         db.ref('notes/' + uid).push(this.state.current);
         this.setState({ current : "" });
     }
@@ -104,42 +105,22 @@ class Main extends Component {
         this.setState({ anchorEl: event.currentTarget });
     };
 
-    handleClose = () => {
+    handleClose = (item) => {
         this.setState({ anchorEl: null });
-        this.props.history.push('/account')
+        // this.props.history.push('/account');
+        if (item === "edit"){
+            this.props.history.push('/account');
+        }
+
 
     };
 
-   
-    onRemoveItem= (note,index) => {
 
-        console.log(note)
-        console.log(note.id)
-        console.log(note.text)
-
-
-        // var count = index;
-        //
-        // var tempNotes = [];
-        //
-        //
-        // this.state.notes.forEach(function (element) {
-        //     if (count !== index){
-        //         tempNotes.push(element)
-        //     }
-        //     count++;
-        // })
-        //
-        // const uid = auth.currentUser.uid;
-        // db.ref('notes/' + uid).remove()
-        //
-        //
-        // tempNotes.forEach(function (input) {
-        //     db.ref('notes/' + uid).push(input.text);
-        // });
-        // window.location.reload();
-
-    }
+    onRemoveItem= (note) => {
+        const uid = auth.currentUser.uid;
+        db.ref('notes/' + uid).child(note.id).remove();
+        window.location.reload();
+    };
 
 
     render() {
@@ -152,6 +133,8 @@ class Main extends Component {
                     <Paper className={classes.paper} >
 
                         <div style={{display: 'flex', flexDirection: 'row'}}>
+
+
 
                         <IconButton
                             aria-haspopup="true"
@@ -181,37 +164,39 @@ class Main extends Component {
                             onClose={this.handleClose}
                         >
                             {/*<MenuItem onClick={this.handleClose}>Profile</MenuItem>*/}
-                            <MenuItem onClick={this.handleClose}>My account</MenuItem>
+                            <MenuItem onClick={() => this.handleClose("edit")}>Edit my account</MenuItem>
+                            <MenuItem onClick={() => this.handleClose("cancel")}>Cancel</MenuItem>
 
                         </Menu>
 
 
 
-                            <List className={classes.list} >
-                                { /* Render the list of messages */
-                                    this.state.notes.map( (note,index) =>
-                                        <ListItem key={note.id}>
-                                            <ListItemText primary={(index+1) + '. ' + note.text}/>
-                                            <ListItemSecondaryAction>
-                                              <IconButton aria-label="Delete">
-                                                <DeleteIcon onClick={() => this.onRemoveItem(note,index)}/>
-                                              </IconButton>
-                                            </ListItemSecondaryAction>
-                                        </ListItem> )
-                                }
-                            </List>
-                            <form onSubmit={this.addNote}>
-                                <TextField
-                                    id="note"
-                                    label="Enter new note"
-                                    className={classes.textField}
-                                    value={this.state.current}
-                                    onChange={this.handleChange('current')}
-                                    margin="normal"
-                                    />
-                                <br />
-                                <Button  variant="raised" color="secondary" type="submit">Add</Button>
-                            </form>
+                        <List className={classes.list} >
+                            { /* Render the list of messages */
+                                this.state.notes.map( (note,index) =>
+                                <ListItem key={note.id}>
+                                    <ListItemText primary={(index+1) + '. ' + note.text}/>
+                                    <ListItemSecondaryAction>
+                                      <IconButton aria-label="Delete">
+                                        <DeleteIcon onClick={() => this.onRemoveItem(note)}/>
+                                      </IconButton>
+                                    </ListItemSecondaryAction>
+                                </ListItem> )
+                            }
+                        </List>
+
+                        <form onSubmit={this.addNote}>
+                            <TextField
+                                id="note"
+                                label="Enter new note"
+                                className={classes.textField}
+                                value={this.state.current}
+                                onChange={this.handleChange('current')}
+                                margin="normal"
+                                />
+                            <br />
+                            <Button  variant="raised" color="secondary" type="submit">Add</Button>
+                        </form>
                     </Paper>
                 </Grid>
             </Grid>

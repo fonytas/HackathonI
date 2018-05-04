@@ -2,8 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e18d6f43-d802-43c8-8f18-467fe6a90dc1" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/src/components/Account.jsx" afterPath="$PROJECT_DIR$/src/components/Account.jsx" />
-      <change beforePath="$PROJECT_DIR$/src/components/App.jsx" afterPath="$PROJECT_DIR$/src/components/App.jsx" />
       <change beforePath="$PROJECT_DIR$/src/components/Main.jsx" afterPath="$PROJECT_DIR$/src/components/Main.jsx" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
@@ -55,8 +53,8 @@
       <file leaf-file-name="Main.jsx" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/components/Main.jsx">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="111">
-              <caret line="112" column="3" lean-forward="false" selection-start-line="112" selection-start-column="3" selection-end-line="112" selection-end-column="3" />
+            <state relative-caret-position="683">
+              <caret line="167" column="77" lean-forward="true" selection-start-line="167" selection-start-column="77" selection-end-line="167" selection-end-column="77" />
               <folding>
                 <element signature="e#0#41#0" expanded="true" />
               </folding>
@@ -342,12 +340,12 @@
       <workItem from="1525159817167" duration="50000" />
       <workItem from="1525160076391" duration="48000" />
       <workItem from="1525160143148" duration="10602000" />
-      <workItem from="1525324016548" duration="16712000" />
+      <workItem from="1525324016548" duration="18333000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="29721000" />
+    <option name="totallyTimeSpent" value="31342000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="923" height="900" extended-state="6" />
@@ -761,8 +759,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/components/Main.jsx">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="111">
-          <caret line="112" column="3" lean-forward="false" selection-start-line="112" selection-start-column="3" selection-end-line="112" selection-end-column="3" />
+        <state relative-caret-position="683">
+          <caret line="167" column="77" lean-forward="true" selection-start-line="167" selection-start-column="77" selection-end-line="167" selection-end-column="77" />
           <folding>
             <element signature="e#0#41#0" expanded="true" />
           </folding>
