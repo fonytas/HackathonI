@@ -44,7 +44,8 @@ class Login extends Component {
             vertical: "top",
             horizontal: "center",
             openDialog: false,
-            open: false
+            open: false,
+            inputEmail: ""
         }
         this.onSubmit = this.onSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
@@ -64,7 +65,7 @@ class Login extends Component {
         this.setState({ openDialog: false });
 
         var user = firebase.auth();
-        var emailAddress = "fonyfonyta@gmail.com";
+        var emailAddress = this.state.inputEmail;
 
         user.sendPasswordResetEmail(emailAddress).then(function() {
             // Email sent.
@@ -104,7 +105,15 @@ class Login extends Component {
         this.setState({
             [name]: event.target.value,
         });
+        // console.log(this.state.inputEmail)
     };
+
+    // handleEmail = email => event =>{
+    //     this.setState({
+    //         [email]: event.target.value
+    //
+    //     })
+    // }
 
 
     render() {
@@ -148,7 +157,7 @@ class Login extends Component {
                                 anchorOrigin={{ vertical, horizontal }}
                                 open={open}
                                 onClose={this.handleClose}
-                                autoHideDuration={1000}
+                                autoHideDuration={3000}
                                 SnackbarContentProps={{
                                     'aria-describedby': 'message-id',
                                 }}
@@ -161,17 +170,16 @@ class Login extends Component {
 
                         </form>
 
-                        <Button className={classes.button} onClick={this.handleClickOpenDialog}>Forget your password ?</Button>
+                        <Button className={classes.button} onClick={this.handleClickOpenDialog}>Forget password ?</Button>
                         <Dialog
                             open={openDialog}
                             onClose={this.handleCloseDialog}
                             aria-labelledby="form-dialog-title"
                         >
-                            <DialogTitle id="form-dialog-title">Subscribe</DialogTitle>
+                            <DialogTitle id="form-dialog-title">Account Recovery</DialogTitle>
                             <DialogContent>
                                 <DialogContentText>
-                                    To subscribe to this website, please enter your email address here. We will send
-                                    updates occationally.
+                                    Let's find your account! Enter your email.
                                 </DialogContentText>
                                 <TextField
                                     autoFocus
@@ -180,6 +188,7 @@ class Login extends Component {
                                     label="Email Address"
                                     type="email"
                                     fullWidth
+                                    onChange={this.handleChange('inputEmail')}
                                 />
                             </DialogContent>
                             <DialogActions>

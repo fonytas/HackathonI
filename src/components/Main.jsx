@@ -8,11 +8,13 @@ import Paper from 'material-ui/Paper';
 import TextField from 'material-ui/TextField';
 import IconButton from 'material-ui/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
+import AccountCircle from '@material-ui/icons/AccountCircle';
 import List, {
     ListItem,
     ListItemText,
     ListItemSecondaryAction,
 } from 'material-ui/List';
+import {Menu, MenuItem, Typography} from "material-ui";
 
 
 const styles = theme => ({
@@ -48,6 +50,17 @@ const styles = theme => ({
         overflow: 'auto',
     },
 
+    title: {
+        // marginBottom: 16,
+        // fontSize: 14,
+        marginTop: 15,
+        // marginLeft:10
+    },
+    avatar:{
+        width: 35,
+        height: 35,
+    }
+
 });
 
 
@@ -57,7 +70,8 @@ class Main extends Component {
         super(props);
         this.state = {
             notes : [],
-            current : ""
+            current : "",
+            anchorEl: null,
         };
         this.addNote = this.addNote.bind(this);
         this.handleChange = this.handleChange.bind(this);
@@ -86,13 +100,62 @@ class Main extends Component {
         this.setState({ current : "" });
     }
 
+    handleMenu = event => {
+        this.setState({ anchorEl: event.currentTarget });
+    };
+
+    handleClose = () => {
+        this.setState({ anchorEl: null });
+
+    };
+
+
+
     render() {
         const classes = this.props.classes;
+        const { anchorEl } = this.state;
+        const open = Boolean(anchorEl);
         return (
             <Grid container className={classes.container} >
                 <Grid item xs={12} >
                     <Paper className={classes.paper} >
-                        <p>Hello, { auth.currentUser.email }</p>
+
+                        <div style={{display: 'flex', flexDirection: 'row'}}>
+
+                        <IconButton
+                            aria-haspopup="true"
+                            color={"secondary"}
+                            onClick={this.handleMenu}>
+                            <AccountCircle className={classes.avatar} />
+
+                        </IconButton>
+
+                        <Typography className={classes.title} color="textSecondary">
+                            Hello, { auth.currentUser.email }
+                        </Typography>
+                        </div>
+
+                        <Menu
+                            id="menu-appbar"
+                            anchorEl={anchorEl}
+                            anchorOrigin={{
+                                vertical: 'top',
+                                horizontal: 'right',
+                            }}
+                            transformOrigin={{
+                                vertical: 'top',
+                                horizontal: 'right',
+                            }}
+                            open={open}
+                            onClose={this.handleClose}
+                        >
+                            {/*<MenuItem onClick={this.handleClose}>Profile</MenuItem>*/}
+                            <MenuItem onClick={this.handleClose}>My account</MenuItem>
+
+                        </Menu>
+
+
+
                             <List className={classes.list} >
                                 { /* Render the list of messages */
                                     this.state.notes.map( (note,index) =>
