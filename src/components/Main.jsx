@@ -106,9 +106,40 @@ class Main extends Component {
 
     handleClose = () => {
         this.setState({ anchorEl: null });
+        this.props.history.push('/account')
 
     };
 
+   
+    onRemoveItem= (note,index) => {
+
+        console.log(note)
+        console.log(note.id)
+        console.log(note.text)
+
+
+        // var count = index;
+        //
+        // var tempNotes = [];
+        //
+        //
+        // this.state.notes.forEach(function (element) {
+        //     if (count !== index){
+        //         tempNotes.push(element)
+        //     }
+        //     count++;
+        // })
+        //
+        // const uid = auth.currentUser.uid;
+        // db.ref('notes/' + uid).remove()
+        //
+        //
+        // tempNotes.forEach(function (input) {
+        //     db.ref('notes/' + uid).push(input.text);
+        // });
+        // window.location.reload();
+
+    }
 
 
     render() {
@@ -163,7 +194,7 @@ class Main extends Component {
                                             <ListItemText primary={(index+1) + '. ' + note.text}/>
                                             <ListItemSecondaryAction>
                                               <IconButton aria-label="Delete">
-                                                <DeleteIcon />
+                                                <DeleteIcon onClick={() => this.onRemoveItem(note,index)}/>
                                               </IconButton>
                                             </ListItemSecondaryAction>
                                         </ListItem> )

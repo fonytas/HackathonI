@@ -14,6 +14,7 @@ import PrivateRoute from './PrivateRoute';
 import Main from './Main';
 import Login from './Login';
 import Signup from './Signup';
+import Account from './Account';
 import './index.css';
 
 // const theme = createMuiTheme();
@@ -63,7 +64,6 @@ class App extends Component {
 
 
     componentWillMount() {
-
 
 
         auth.onAuthStateChanged(user => {
@@ -119,6 +119,8 @@ class App extends Component {
                     />
                 <Route exact path="/login" component={Login} />
                 <Route exact path="/signup" component={Signup} />
+                <Route exact path="/account" component={Account}/>
+
             </div>
         );
         return (
