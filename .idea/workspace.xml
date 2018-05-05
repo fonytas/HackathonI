@@ -2,10 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e18d6f43-d802-43c8-8f18-467fe6a90dc1" name="Default" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change beforePath="$PROJECT_DIR$/src/components/Account.jsx" afterPath="$PROJECT_DIR$/src/components/Account.jsx" />
-      <change beforePath="$PROJECT_DIR$/src/components/App.jsx" afterPath="$PROJECT_DIR$/src/components/App.jsx" />
-      <change beforePath="$PROJECT_DIR$/src/components/Login.jsx" afterPath="$PROJECT_DIR$/src/components/Login.jsx" />
-      <change beforePath="$PROJECT_DIR$/src/components/Signup.jsx" afterPath="$PROJECT_DIR$/src/components/Signup.jsx" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -34,8 +32,8 @@
       <file leaf-file-name="Login.jsx" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/components/Login.jsx">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1115">
-              <caret line="103" column="44" lean-forward="false" selection-start-line="103" selection-start-column="44" selection-end-line="103" selection-end-column="44" />
+            <state relative-caret-position="-3">
+              <caret line="152" column="35" lean-forward="true" selection-start-line="152" selection-start-column="35" selection-end-line="152" selection-end-column="35" />
               <folding>
                 <element signature="e#0#41#0" expanded="true" />
               </folding>
@@ -68,8 +66,8 @@
       <file leaf-file-name="Account.jsx" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/components/Account.jsx">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3766">
-              <caret line="341" column="36" lean-forward="false" selection-start-line="341" selection-start-column="36" selection-end-line="341" selection-end-column="36" />
+            <state relative-caret-position="354">
+              <caret line="409" column="58" lean-forward="false" selection-start-line="409" selection-start-column="58" selection-end-line="409" selection-end-column="58" />
               <folding>
                 <element signature="e#0#41#0" expanded="true" />
               </folding>
@@ -113,11 +111,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>openDialog</find>
-      <find>open</find>
-      <find>dela`</find>
-      <find>delay</find>
-      <find>resetPassword</find>
       <find>TextField</find>
       <find>handleChange</find>
       <find>DeleteIcon</find>
@@ -143,6 +136,11 @@
       <find>window</find>
       <find>confirm</find>
       <find>handleClose</find>
+      <find>handleClic</find>
+      <find>Snack</find>
+      <find>openS</find>
+      <find>handleClcik</find>
+      <find>handleClick</find>
     </findStrings>
     <replaceStrings>
       <replace />
@@ -355,12 +353,12 @@
       <workItem from="1525160076391" duration="48000" />
       <workItem from="1525160143148" duration="10602000" />
       <workItem from="1525324016548" duration="20231000" />
-      <workItem from="1525533508784" duration="15636000" />
+      <workItem from="1525533508784" duration="17402000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="48876000" />
+    <option name="totallyTimeSpent" value="50642000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="22" width="1440" height="878" extended-state="6" />
@@ -828,8 +826,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/components/Login.jsx">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1115">
-          <caret line="103" column="44" lean-forward="false" selection-start-line="103" selection-start-column="44" selection-end-line="103" selection-end-column="44" />
+        <state relative-caret-position="-3">
+          <caret line="152" column="35" lean-forward="true" selection-start-line="152" selection-start-column="35" selection-end-line="152" selection-end-column="35" />
           <folding>
             <element signature="e#0#41#0" expanded="true" />
           </folding>
@@ -838,8 +836,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/components/Account.jsx">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3766">
-          <caret line="341" column="36" lean-forward="false" selection-start-line="341" selection-start-column="36" selection-end-line="341" selection-end-column="36" />
+        <state relative-caret-position="354">
+          <caret line="409" column="58" lean-forward="false" selection-start-line="409" selection-start-column="58" selection-end-line="409" selection-end-column="58" />
           <folding>
             <element signature="e#0#41#0" expanded="true" />
           </folding>

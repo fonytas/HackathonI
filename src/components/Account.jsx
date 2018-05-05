@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import {withStyles} from "material-ui/styles/index";
 import firebase, {auth} from "../firebase";
 import {
-    Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Grid, Paper,
+    Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Grid, Paper, Snackbar,
     TextField
 } from "material-ui";
 import Save from '@material-ui/icons/Save';
@@ -79,6 +79,9 @@ class Account extends Component {
             currentPassword: "",
             confirmPassword: "",
             open: false,
+            openSnack: false,
+            vertical: "top",
+            horizontal: "center",
 
         }
         this.handleChange = this.handleChange.bind(this);
@@ -87,6 +90,19 @@ class Account extends Component {
     // handleClickOpen = () => {
     //     this.setState({ open: true });
     // };
+    handleClick = state => () => {
+        console.log("Click")
+        this.saveChange;
+
+        this.setState({ open: false });
+
+        // this.setState({ openSnack: true, ...state });
+        this.setState({openSnack: true});
+    };
+
+    handleCloseSnack = () => {
+        this.setState({ openSnack: false });
+    };
 
     handleClose = () => {
         this.setState({ open: false });
@@ -111,7 +127,7 @@ class Account extends Component {
     };
 
     saveChange = () => {
-        this.setState({ open: false });
+
 
         var user = firebase.auth().currentUser;
 
@@ -124,12 +140,15 @@ class Account extends Component {
         var newPassword = this.state.newPassword;
         var confirmPassword = this.state.confirmPassword;
         var email = this.state.email;
+        var displayName = this.state.displayName;
 
         user.reauthenticateWithCredential(credential).then(function() {
             // User re-authenticated.
             console.log("User re-authenticated.")
             if (newPassword && confirmPassword){
+                console.log("1")
                 if (newPassword === confirmPassword){
+                    console.log("2")
                     user.updatePassword(newPassword).then(function() {
                         // Update successful.
                         console.log("Password updated")
@@ -156,38 +175,46 @@ class Account extends Component {
                 });
             }
 
+            if (displayName){
+                user.updateProfile({
+                    displayName: displayName,
+                    photoURL: ""
+                }).then(function() {
+                    console.log("Username updated!")
+                }).catch(function(error) {
+                });
+            }
+
         }).catch(function(error) {
             // An error happened.
             alert(error.message)
 
         });
 
-
-        if (this.state.displayName){
-            user.updateProfile({
-                displayName: this.state.displayName,
-                photoURL: ""
-            }).then(function() {
-                console.log("Username updated!")
-            }).catch(function(error) {
-            });
-        }
+        // this.handleClick({ vertical: 'top', horizontal: 'center' });
 
 
 
 
+
+
+
+
+        // console.log("DONE")
+        // this.props.history.push('/')
         // window.location.assign('/')
-        console.log("DONE")
 
     }
 
     handleUpdate = () => {
-        this.setState({ open: true });
-        this.saveChange
-
+        this.setState({open: true});
+        // this.saveChange;
 
 
     }
+
+
+
 
 
 
@@ -195,11 +222,15 @@ class Account extends Component {
 
     render(){
         const classes = this.props.classes;
+        const { vertical, horizontal, openSnack } = this.state;
         return(
 
             <Grid container className={classes.container} >
                 <Grid item xs={12} >
                     <Paper className={classes.paper} >
+                        {/*<Button onClick={this.handleClick({ vertical: 'top', horizontal: 'center' })}>*/}
+                            {/*Top-Center*/}
+                        {/*</Button>*/}
 
                         <TextField
                             onChange={this.handleChange('displayName')}
@@ -315,7 +346,7 @@ class Account extends Component {
 
 
                         <Button onClick={() =>  window.location.assign('/')} className={classes.button} variant="raised" size="small">
-                            Cancel
+                            Back
                         </Button>
 
                         <Button onClick={this.handleUpdate} className={classes.button} variant="raised" size="small" color="secondary">
@@ -330,7 +361,7 @@ class Account extends Component {
                             aria-labelledby="alert-dialog-title"
                             aria-describedby="alert-dialog-description"
                         >
-                            <DialogTitle id="alert-dialog-title">{"Use Google's location service?"}</DialogTitle>
+                            <DialogTitle id="alert-dialog-title">{"Confirm Changes"}</DialogTitle>
                             <DialogContent>
                                 <DialogContentText id="alert-dialog-description">
                                     Are you sure you want to make theses change ?
@@ -339,7 +370,7 @@ class Account extends Component {
 
                                 </DialogContentText>
                                 <TextField
-                                    
+
                                     onChange={this.handleChange('currentPassword')}
                                     className={classes.textField}
                                     // defaultValue={}
@@ -360,15 +391,29 @@ class Account extends Component {
                                 />
                             </DialogContent>
                             <DialogActions>
-                                <Button onClick={this.handleClose} color="primary">
-                                    Disagree
+                                <Button onClick={this.handleClose} color="secondary">
+                                    Cancel
                                 </Button>
-                                <Button onClick={this.saveChange} color="primary" autoFocus>
-                                    Agree
+                                <Button onClick={this.handleClick({ vertical: 'top', horizontal: 'center' })} color="primary" autoFocus>
+                                    Confirm
                                 </Button>
                             </DialogActions>
                         </Dialog>
 
+                        {/*<Button onClick={this.handleClick({ vertical: 'top', horizontal: 'center' })}>*/}
+                            {/*Top-Center*/}
+                        {/*</Button>*/}
+                        <Snackbar
+                            anchorOrigin={{ vertical, horizontal }}
+                            open={openSnack}
+                            autoHideDuration={2000}
+                            onClose={this.handleCloseSnack}
+                            // onClose={this.handleClose}
+                            SnackbarContentProps={{
+                                'aria-describedby': 'message-id',
+                            }}
+                            message={<span id="message-id">Saved</span>}
+                        />
 
 
                     </Paper>
