@@ -87,7 +87,7 @@ class Account extends Component {
     }
 
     handleClick = state => () => {
-        this.saveChange;
+        this.saveChange();
         this.setState({ open: false, openSnack: true });
     };
 

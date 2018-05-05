@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Route, withRouter } from 'react-router-dom';
-import firebase, { auth } from '../firebase';
+import { auth } from '../firebase';
 
 import { withStyles,MuiThemeProvider, createMuiTheme } from 'material-ui/styles';
 
