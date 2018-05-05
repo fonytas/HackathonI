@@ -22,7 +22,7 @@ const styles = theme => ({
         color: theme.palette.text.secondary,
       },
     signUpButton:{
-        margin: theme.spacing.unit + 8,
+        margin: theme.spacing.unit +5 ,
         color: '#9ba09e',
         textColor:'#5f0000',
     },
@@ -30,6 +30,13 @@ const styles = theme => ({
         margin: theme.spacing.unit,
         fontSize: 12
     },
+    facebook:{
+        color: "#fff",
+        margin: theme.spacing.unit + 5,
+        fontSize: 12,
+        backgroundColor: "#de4b39",
+        // width:30
+    }
 });
 
 
@@ -93,6 +100,8 @@ class Login extends Component {
             if (!authUser.emailVerified){
                 console.log("Please verify first")
                 this.setState({ open: true, ...state });
+            }else{
+                window.location.assign('/');
             }
 
         })
@@ -108,12 +117,31 @@ class Login extends Component {
         // console.log(this.state.inputEmail)
     };
 
-    // handleEmail = email => event =>{
-    //     this.setState({
-    //         [email]: event.target.value
-    //
-    //     })
-    // }
+
+    handleLogin = () =>{
+        var provider = new firebase.auth.GoogleAuthProvider();
+        firebase.auth().signInWithPopup(provider).then(function(result) {
+            // This gives you a Google Access Token. You can use it to access the Google API.
+            var token = result.credential.accessToken;
+            // The signed-in user info.
+            var user = result.user;
+
+            // ...
+        }).catch(function(error) {
+            // Handle Errors here.
+            var errorCode = error.code;
+            var errorMessage = error.message;
+            // The email of the user's account used.
+            var email = error.email;
+            // The firebase.auth.AuthCredential type that was used.
+            var credential = error.credential;
+            // ...
+        });
+
+
+
+
+    }
 
 
     render() {
@@ -149,7 +177,7 @@ class Login extends Component {
                             />
 
                             <br />
-                            <Button variant="raised" color="secondary" type="submit">Log in</Button>
+                            <Button  variant="raised" color="secondary" type="submit">Log in</Button>
                             <Button onClick={()=> this.props.history.push('/signup')} className={classes.signUpButton} variant="raised" type="submit">Sign Up</Button>
 
 
@@ -165,10 +193,13 @@ class Login extends Component {
                             />
 
 
-
-
-
                         </form>
+
+                        <Button  size="large" onClick={this.handleLogin} variant="raised" className={classes.facebook}>
+                            Sign in with Google
+                        </Button>
+
+                        <br/>
 
                         <Button className={classes.button} onClick={this.handleClickOpenDialog}>Forget password ?</Button>
                         <Dialog

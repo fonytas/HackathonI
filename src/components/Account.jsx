@@ -1,9 +1,13 @@
 import React, { Component } from 'react';
 import {withStyles} from "material-ui/styles/index";
 import firebase, {auth} from "../firebase";
-import {Button, Grid, Paper, TextField} from "material-ui";
+import {
+    Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Grid, Paper,
+    TextField
+} from "material-ui";
 import Save from '@material-ui/icons/Save';
 import {Link, withRouter} from "react-router-dom";
+import {Alert} from "react-bootstrap";
 
 const styles = theme => ({
     root: {
@@ -70,11 +74,23 @@ class Account extends Component {
         this.state = {
             email : "",
             password : "",
-            displayName: ""
+            displayName: "",
+            newPassword: "",
+            currentPassword: "",
+            confirmPassword: "",
+            open: false,
+
         }
         this.handleChange = this.handleChange.bind(this);
     }
 
+    // handleClickOpen = () => {
+    //     this.setState({ open: true });
+    // };
+
+    handleClose = () => {
+        this.setState({ open: false });
+    };
 
     componentWillMount(){
         var user = firebase.auth().currentUser;
@@ -94,33 +110,82 @@ class Account extends Component {
         // console.log(this.state.displayName)
     };
 
-    handleUpdate = () => {
+    saveChange = () => {
+        this.setState({ open: false });
 
         var user = firebase.auth().currentUser;
 
-        if (this.state.displayName === ""){
-            this.setState({displayName: auth.currentUser.email})
+
+        const credential = firebase.auth.EmailAuthProvider.credential(
+            user.email,
+            this.state.currentPassword
+        );
+
+        var newPassword = this.state.newPassword;
+        var confirmPassword = this.state.confirmPassword;
+        var email = this.state.email;
+
+        user.reauthenticateWithCredential(credential).then(function() {
+            // User re-authenticated.
+            console.log("User re-authenticated.")
+            if (newPassword && confirmPassword){
+                if (newPassword === confirmPassword){
+                    user.updatePassword(newPassword).then(function() {
+                        // Update successful.
+                        console.log("Password updated")
+
+                    }).catch(function(error) {
+                        // An error happened.
+                        console.log(error)
+                        alert(error.message)
+
+                    });
+                }
+                else{
+                    alert("Password mismatch")
+                }
+            }
+
+            if (email){
+                user.updateEmail(email).then(function() {
+                    // Update successful.
+                    console.log("Email updated!")
+                }).catch(function(error) {
+                    // An error happened.
+                    alert(error.message)
+                });
+            }
+
+        }).catch(function(error) {
+            // An error happened.
+            alert(error.message)
+
+        });
+
+
+        if (this.state.displayName){
+            user.updateProfile({
+                displayName: this.state.displayName,
+                photoURL: ""
+            }).then(function() {
+                console.log("Username updated!")
+            }).catch(function(error) {
+            });
         }
 
 
-        user.updateProfile({
-            displayName: this.state.displayName,
-        }).then(function() {
-            console.log("Username updated!")
-        }).catch(function(error) {
-        });
 
 
+        // window.location.assign('/')
+        console.log("DONE")
 
-        user.updateEmail(this.state.email).then(function() {
-            // Update successful.
-            console.log("Email updated!")
-        }).catch(function(error) {
-            // An error happened.
-        });
+    }
+
+    handleUpdate = () => {
+        this.setState({ open: true });
+        this.saveChange
 
 
-        window.location.assign('/')
 
     }
 
@@ -141,7 +206,7 @@ class Account extends Component {
                             className={classes.textField}
                             defaultValue={auth.currentUser.displayName}
                             label="Username"
-                            id="bootstrap-input"
+                            id="displayName"
                             InputProps={{
                                 disableUnderline: true,
                                 classes: {
@@ -162,7 +227,72 @@ class Account extends Component {
                             className={classes.textField}
                             defaultValue={auth.currentUser.email}
                             label="Email"
-                            id="bootstrap-input"
+                            id="email"
+                            InputProps={{
+                                disableUnderline: true,
+                                classes: {
+                                    root: classes.bootstrapRoot,
+                                    input: classes.bootstrapInput,
+                                },
+                            }}
+                            InputLabelProps={{
+                                shrink: true,
+                                className: classes.bootstrapFormLabel,
+                            }}
+                        />
+                        <br/>
+
+                        {/*<TextField*/}
+                            {/*onChange={this.handleChange('currentPassword')}*/}
+                            {/*className={classes.textField}*/}
+                            {/*// defaultValue={}*/}
+                            {/*label="Current Password"*/}
+                            {/*id="currentPassword"*/}
+                            {/*type="password"*/}
+                            {/*InputProps={{*/}
+                                {/*disableUnderline: true,*/}
+                                {/*classes: {*/}
+                                    {/*root: classes.bootstrapRoot,*/}
+                                    {/*input: classes.bootstrapInput,*/}
+                                {/*},*/}
+                            {/*}}*/}
+                            {/*InputLabelProps={{*/}
+                                {/*shrink: true,*/}
+                                {/*className: classes.bootstrapFormLabel,*/}
+                            {/*}}*/}
+                        {/*/>*/}
+
+                        <br/>
+
+                        <TextField
+                            onChange={this.handleChange('newPassword')}
+                            className={classes.textField}
+                            // defaultValue={}
+                            label="New Password"
+                            id="newPassword"
+                            type="password"
+                            InputProps={{
+                                disableUnderline: true,
+                                classes: {
+                                    root: classes.bootstrapRoot,
+                                    input: classes.bootstrapInput,
+                                },
+                            }}
+                            InputLabelProps={{
+                                shrink: true,
+                                className: classes.bootstrapFormLabel,
+                            }}
+                        />
+
+                        <br/>
+
+                        <TextField
+                            onChange={this.handleChange('confirmPassword')}
+                            className={classes.textField}
+                            // defaultValue={}
+                            label="Confirm new password"
+                            id="confirmPassword"
+                            type="password"
                             InputProps={{
                                 disableUnderline: true,
                                 classes: {
@@ -182,6 +312,8 @@ class Account extends Component {
 
 
 
+
+
                         <Button onClick={() =>  window.location.assign('/')} className={classes.button} variant="raised" size="small">
                             Cancel
                         </Button>
@@ -190,6 +322,52 @@ class Account extends Component {
                             <Save className={classes.leftIcon} />
                             Save Changes
                         </Button>
+
+
+                        <Dialog
+                            open={this.state.open}
+                            onClose={this.handleClose}
+                            aria-labelledby="alert-dialog-title"
+                            aria-describedby="alert-dialog-description"
+                        >
+                            <DialogTitle id="alert-dialog-title">{"Use Google's location service?"}</DialogTitle>
+                            <DialogContent>
+                                <DialogContentText id="alert-dialog-description">
+                                    Are you sure you want to make theses change ?
+                                    <br/>
+                                    Please confirm theses changes.
+
+                                </DialogContentText>
+                                <TextField
+                                    
+                                    onChange={this.handleChange('currentPassword')}
+                                    className={classes.textField}
+                                    // defaultValue={}
+                                    label="Current Password"
+                                    id="currentPassword"
+                                    type="password"
+                                    // InputProps={{
+                                    //     disableUnderline: true,
+                                    //     classes: {
+                                    //         root: classes.bootstrapRoot,
+                                    //         input: classes.bootstrapInput,
+                                    //     },
+                                    // }}
+                                    // InputLabelProps={{
+                                    //     shrink: true,
+                                    //     className: classes.bootstrapFormLabel,
+                                    // }}
+                                />
+                            </DialogContent>
+                            <DialogActions>
+                                <Button onClick={this.handleClose} color="primary">
+                                    Disagree
+                                </Button>
+                                <Button onClick={this.saveChange} color="primary" autoFocus>
+                                    Agree
+                                </Button>
+                            </DialogActions>
+                        </Dialog>
 
 
 

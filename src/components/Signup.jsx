@@ -49,6 +49,7 @@ class Signup extends Component {
             this.sendVerification();
 
 
+
         })
         .catch(authError => {
             alert(authError);
