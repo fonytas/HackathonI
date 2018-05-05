@@ -1,8 +1,5 @@
 import React, { Component } from 'react';
 import firebase ,{ auth } from '../firebase';
-import { Link } from 'react-router-dom';
-
-
 import { withStyles } from 'material-ui/styles';
 import Button from 'material-ui/Button';
 import Grid from 'material-ui/Grid';
@@ -44,8 +41,6 @@ class Signup extends Component {
 
         auth.createUserWithEmailAndPassword(email, password)
         .then(authUser => {
-            console.log(authUser);
-
             this.sendVerification();
 
 

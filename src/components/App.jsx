@@ -17,7 +17,6 @@ import Signup from './Signup';
 import Account from './Account';
 import './index.css';
 
-// const theme = createMuiTheme();
 
 const theme = createMuiTheme({
     palette: {
@@ -33,8 +32,6 @@ const theme = createMuiTheme({
             dark: '#5f0000',
             contrastText: '#f7f3ed'
         },
-
-
     }
 })
 
@@ -68,16 +65,11 @@ class App extends Component {
 
 
     componentWillMount() {
-        console.log("will mount")
-
-
         auth.onAuthStateChanged(user => {
 
         if (user) {
 
             if (user.emailVerified){
-
-                console.log("Email verified !")
                 this.setState({
                         authenticated: true,
                         currentUser: user,
@@ -86,7 +78,6 @@ class App extends Component {
                 );
             }
             else {
-                console.log("Email not verified !")
                 this.setState({
                     authenticated: false,
                     currentUser: null,
@@ -119,9 +110,6 @@ class App extends Component {
                     component={Main}
                     authenticated={authenticated}
                     />
-
-
-
 
                 <Route exact path="/login" component={Login} />
                 <Route exact path="/signup" component={Signup} />

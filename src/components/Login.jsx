@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 import { auth } from '../firebase';
 
 import { withStyles } from 'material-ui/styles';
@@ -35,7 +34,6 @@ const styles = theme => ({
         margin: theme.spacing.unit + 5,
         fontSize: 12,
         backgroundColor: "#de4b39",
-        // width:30
     }
 });
 
@@ -58,10 +56,8 @@ class Login extends Component {
         this.handleChange = this.handleChange.bind(this);
     }
 
-
     handleClickOpenDialog = () => {
         this.setState({ openDialog: true });
-        // console.log(this.openDialog)
     };
 
     handleCloseDialog = () => {
@@ -76,7 +72,6 @@ class Login extends Component {
 
         user.sendPasswordResetEmail(emailAddress).then(function() {
             // Email sent.
-            console.log("Email Sent!")
         }).catch(function(error) {
             // An error happened.
         });
@@ -88,17 +83,13 @@ class Login extends Component {
     };
 
     onSubmit = state => (event) => {
-        console.log("Submitted")
-
         event.preventDefault();
         const { email, password } = this.state;
 
 
         auth.signInWithEmailAndPassword(email, password)
         .then(authUser => {
-            console.log(authUser);
             if (!authUser.emailVerified){
-                console.log("Please verify first")
                 this.setState({ open: true, ...state });
             }else{
                 window.location.assign('/');
@@ -114,7 +105,6 @@ class Login extends Component {
         this.setState({
             [name]: event.target.value,
         });
-        // console.log(this.state.inputEmail)
     };
 
 
@@ -137,9 +127,6 @@ class Login extends Component {
             var credential = error.credential;
             // ...
         });
-
-
-
 
     }
 
@@ -232,10 +219,7 @@ class Login extends Component {
                             </DialogActions>
                         </Dialog>
 
-
-
                     </Paper>
-
 
                 </Grid>
             </Grid>

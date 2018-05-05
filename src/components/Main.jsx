@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import firebase,{ auth, db } from '../firebase';
+import { auth, db } from '../firebase';
 import { withStyles } from 'material-ui/styles';
 
 import Button from 'material-ui/Button';
@@ -15,8 +15,7 @@ import List, {
     ListItemSecondaryAction,
 } from 'material-ui/List';
 import {Menu, MenuItem, Typography} from "material-ui";
-import {withRouter} from "react-router-dom";
-import ReactDOM from 'react-dom';
+
 
 
 const styles = theme => ({
@@ -28,15 +27,10 @@ const styles = theme => ({
         padding: theme.spacing.unit * 2,
         textAlign: 'left',
         color: theme.palette.text.secondary,
-
-
     },
     container: {
         display: 'flex',
         flexWrap: 'wrap',
-
-
-
     },
     textField: {
         marginLeft: theme.spacing.unit,
@@ -53,10 +47,7 @@ const styles = theme => ({
     },
 
     title: {
-        // marginBottom: 16,
-        // fontSize: 14,
         marginTop: 15,
-        // marginLeft:10
     },
     avatar:{
         width: 35,
@@ -81,9 +72,6 @@ class Main extends Component {
     }
 
     componentWillMount() {
-        console.log("hi")
-        console.log(auth.currentUser.displayName)
-
 
         const uid = auth.currentUser.uid;
 
@@ -131,9 +119,6 @@ class Main extends Component {
 
 
     render() {
-        // console.log("render")
-
-
         const classes = this.props.classes;
         const { anchorEl } = this.state;
         const open = Boolean(anchorEl);
@@ -173,7 +158,6 @@ class Main extends Component {
                             open={open}
                             onClose={this.handleClose}
                         >
-                            {/*<MenuItem onClick={this.handleClose}>Profile</MenuItem>*/}
                             <MenuItem onClick={() => this.handleClose("edit")}>Edit my account</MenuItem>
                             <MenuItem onClick={() => this.handleClose("cancel")}>Cancel</MenuItem>
 

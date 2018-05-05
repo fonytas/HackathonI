@@ -6,8 +6,7 @@ import {
     TextField
 } from "material-ui";
 import Save from '@material-ui/icons/Save';
-import {Link, withRouter} from "react-router-dom";
-import {Alert} from "react-bootstrap";
+
 
 const styles = theme => ({
     root: {
@@ -87,17 +86,9 @@ class Account extends Component {
         this.handleChange = this.handleChange.bind(this);
     }
 
-    // handleClickOpen = () => {
-    //     this.setState({ open: true });
-    // };
     handleClick = state => () => {
-        console.log("Click")
         this.saveChange;
-
-        this.setState({ open: false });
-
-        // this.setState({ openSnack: true, ...state });
-        this.setState({openSnack: true});
+        this.setState({ open: false, openSnack: true });
     };
 
     handleCloseSnack = () => {
@@ -123,7 +114,6 @@ class Account extends Component {
         this.setState({
             [name]: event.target.value,
         });
-        // console.log(this.state.displayName)
     };
 
     saveChange = () => {
@@ -144,18 +134,13 @@ class Account extends Component {
 
         user.reauthenticateWithCredential(credential).then(function() {
             // User re-authenticated.
-            console.log("User re-authenticated.")
             if (newPassword && confirmPassword){
-                console.log("1")
                 if (newPassword === confirmPassword){
-                    console.log("2")
                     user.updatePassword(newPassword).then(function() {
                         // Update successful.
-                        console.log("Password updated")
 
                     }).catch(function(error) {
                         // An error happened.
-                        console.log(error)
                         alert(error.message)
 
                     });
@@ -168,7 +153,6 @@ class Account extends Component {
             if (email){
                 user.updateEmail(email).then(function() {
                     // Update successful.
-                    console.log("Email updated!")
                 }).catch(function(error) {
                     // An error happened.
                     alert(error.message)
@@ -180,46 +164,20 @@ class Account extends Component {
                     displayName: displayName,
                     photoURL: ""
                 }).then(function() {
-                    console.log("Username updated!")
                 }).catch(function(error) {
                 });
             }
 
         }).catch(function(error) {
-            // An error happened.
             alert(error.message)
 
         });
-
-        // this.handleClick({ vertical: 'top', horizontal: 'center' });
-
-
-
-
-
-
-
-
-        // console.log("DONE")
-        // this.props.history.push('/')
-        // window.location.assign('/')
 
     }
 
     handleUpdate = () => {
         this.setState({open: true});
-        // this.saveChange;
-
-
     }
-
-
-
-
-
-
-
-
     render(){
         const classes = this.props.classes;
         const { vertical, horizontal, openSnack } = this.state;
@@ -228,9 +186,6 @@ class Account extends Component {
             <Grid container className={classes.container} >
                 <Grid item xs={12} >
                     <Paper className={classes.paper} >
-                        {/*<Button onClick={this.handleClick({ vertical: 'top', horizontal: 'center' })}>*/}
-                            {/*Top-Center*/}
-                        {/*</Button>*/}
 
                         <TextField
                             onChange={this.handleChange('displayName')}
@@ -272,27 +227,6 @@ class Account extends Component {
                             }}
                         />
                         <br/>
-
-                        {/*<TextField*/}
-                            {/*onChange={this.handleChange('currentPassword')}*/}
-                            {/*className={classes.textField}*/}
-                            {/*// defaultValue={}*/}
-                            {/*label="Current Password"*/}
-                            {/*id="currentPassword"*/}
-                            {/*type="password"*/}
-                            {/*InputProps={{*/}
-                                {/*disableUnderline: true,*/}
-                                {/*classes: {*/}
-                                    {/*root: classes.bootstrapRoot,*/}
-                                    {/*input: classes.bootstrapInput,*/}
-                                {/*},*/}
-                            {/*}}*/}
-                            {/*InputLabelProps={{*/}
-                                {/*shrink: true,*/}
-                                {/*className: classes.bootstrapFormLabel,*/}
-                            {/*}}*/}
-                        {/*/>*/}
-
                         <br/>
 
                         <TextField
@@ -339,12 +273,6 @@ class Account extends Component {
 
                         <br />
 
-
-
-
-
-
-
                         <Button onClick={() =>  window.location.assign('/')} className={classes.button} variant="raised" size="small">
                             Back
                         </Button>
@@ -367,27 +295,13 @@ class Account extends Component {
                                     Are you sure you want to make theses change ?
                                     <br/>
                                     Please confirm theses changes.
-
                                 </DialogContentText>
                                 <TextField
-
                                     onChange={this.handleChange('currentPassword')}
                                     className={classes.textField}
-                                    // defaultValue={}
                                     label="Current Password"
                                     id="currentPassword"
                                     type="password"
-                                    // InputProps={{
-                                    //     disableUnderline: true,
-                                    //     classes: {
-                                    //         root: classes.bootstrapRoot,
-                                    //         input: classes.bootstrapInput,
-                                    //     },
-                                    // }}
-                                    // InputLabelProps={{
-                                    //     shrink: true,
-                                    //     className: classes.bootstrapFormLabel,
-                                    // }}
                                 />
                             </DialogContent>
                             <DialogActions>
@@ -400,15 +314,11 @@ class Account extends Component {
                             </DialogActions>
                         </Dialog>
 
-                        {/*<Button onClick={this.handleClick({ vertical: 'top', horizontal: 'center' })}>*/}
-                            {/*Top-Center*/}
-                        {/*</Button>*/}
                         <Snackbar
                             anchorOrigin={{ vertical, horizontal }}
                             open={openSnack}
                             autoHideDuration={2000}
                             onClose={this.handleCloseSnack}
-                            // onClose={this.handleClose}
                             SnackbarContentProps={{
                                 'aria-describedby': 'message-id',
                             }}
