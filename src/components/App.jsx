@@ -59,19 +59,22 @@ class App extends Component {
         this.state = {
             loading: true,
             authenticated: false,
-            currentUser: null };
-        }
+            currentUser: null,
+
+        };
+    }
 
 
     componentWillMount() {
+        console.log("will mount")
 
 
         auth.onAuthStateChanged(user => {
 
-
         if (user) {
-            // console.log(user.email)
+
             if (user.emailVerified){
+
                 console.log("Email verified !")
                 this.setState({
                         authenticated: true,
@@ -89,10 +92,7 @@ class App extends Component {
                     () => {  this.props.history.push('/login') }
                 );
             }
-
-
         } else {
-            console.log("GGWP")
             this.setState({
                 authenticated: false,
                 currentUser: null,
@@ -117,11 +117,15 @@ class App extends Component {
                     component={Main}
                     authenticated={authenticated}
                     />
+
+
                 <Route exact path="/login" component={Login} />
                 <Route exact path="/signup" component={Signup} />
                 <Route exact path="/account" component={Account}/>
 
+
             </div>
+
         );
         return (
             <MuiThemeProvider theme={theme}>
@@ -143,5 +147,7 @@ class App extends Component {
          );
     }
 }
+
+
 
 export default withRouter(withStyles(styles)(App));

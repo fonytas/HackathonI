@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { auth, db } from '../firebase';
+import firebase,{ auth, db } from '../firebase';
 import { withStyles } from 'material-ui/styles';
 
 import Button from 'material-ui/Button';
@@ -15,6 +15,8 @@ import List, {
     ListItemSecondaryAction,
 } from 'material-ui/List';
 import {Menu, MenuItem, Typography} from "material-ui";
+import {withRouter} from "react-router-dom";
+import ReactDOM from 'react-dom';
 
 
 const styles = theme => ({
@@ -64,6 +66,7 @@ const styles = theme => ({
 });
 
 
+
 class Main extends Component {
 
     constructor(props) {
@@ -78,7 +81,12 @@ class Main extends Component {
     }
 
     componentWillMount() {
+        console.log("hi")
+        console.log(auth.currentUser.displayName)
+
+
         const uid = auth.currentUser.uid;
+
         let notesRef = db.ref('notes/' + uid).orderByKey().limitToLast(100);
         notesRef.on('child_added', snapshot => {
             let note = { text: snapshot.val(), id: snapshot.key };
@@ -94,11 +102,13 @@ class Main extends Component {
 
 
     addNote(e) {
+
         e.preventDefault();
         const uid = auth.currentUser.uid;
-        // console.log(auth.currentUser.displayName)
         db.ref('notes/' + uid).push(this.state.current);
         this.setState({ current : "" });
+
+
     }
 
     handleMenu = event => {
@@ -107,12 +117,9 @@ class Main extends Component {
 
     handleClose = (item) => {
         this.setState({ anchorEl: null });
-        // this.props.history.push('/account');
         if (item === "edit"){
             this.props.history.push('/account');
         }
-
-
     };
 
 
@@ -124,17 +131,20 @@ class Main extends Component {
 
 
     render() {
+        // console.log("render")
+
+
         const classes = this.props.classes;
         const { anchorEl } = this.state;
         const open = Boolean(anchorEl);
+
+
         return (
             <Grid container className={classes.container} >
                 <Grid item xs={12} >
                     <Paper className={classes.paper} >
 
                         <div style={{display: 'flex', flexDirection: 'row'}}>
-
-
 
                         <IconButton
                             aria-haspopup="true"
