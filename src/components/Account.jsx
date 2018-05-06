@@ -142,7 +142,6 @@ class Account extends Component {
                     }).catch(function(error) {
                         // An error happened.
                         alert(error.message)
-
                     });
                 }
                 else{
@@ -150,13 +149,14 @@ class Account extends Component {
                 }
             }
 
-
-
             if (email){
                 user.updateEmail(email).then(function() {
                     // Update successful.
                     user.sendEmailVerification().then(function() {
                         // Email sent.
+                        auth.signOut();
+                        window.location.assign('/')
+
 
                     }).catch(function(error) {
                         // An error happened.
