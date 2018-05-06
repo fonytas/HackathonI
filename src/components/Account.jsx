@@ -150,9 +150,19 @@ class Account extends Component {
                 }
             }
 
+
+
             if (email){
                 user.updateEmail(email).then(function() {
                     // Update successful.
+                    user.sendEmailVerification().then(function() {
+                        // Email sent.
+
+                    }).catch(function(error) {
+                        // An error happened.
+                        alert(error.message)
+                    });
+
                 }).catch(function(error) {
                     // An error happened.
                     alert(error.message)
